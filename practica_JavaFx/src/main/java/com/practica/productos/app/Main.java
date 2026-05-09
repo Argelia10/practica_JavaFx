@@ -2,6 +2,7 @@
 package com.practica.productos.app;
 
 import com.practica.productos.modelo.Producto;
+import com.practica.productos.servicio.ProductoService;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,13 +11,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 public class Main extends Application {
+
 @Override
 public void start(Stage stage) {
-    
+ProductoService servicio = new ProductoService();
 TextField campo = new TextField();
 Button boton = new Button("Mostrar");
 Label label = new Label();
 boton.setOnAction(e -> {
+    servicio.agregar(new Producto(campo.getText()));
+String texto = "";
+for (Producto p : servicio.listar()) {
+texto += p.getNombre() + "\n";
+}
 try {
     Producto p = new Producto(campo.getText());
     label.setText(p.getNombre());
